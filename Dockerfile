@@ -35,27 +35,21 @@ RUN locale-gen en_US.UTF-8 && \
 RUN rm /bin/sh && \
    ln -s /bin/bash /bin/sh
 
-# adduser vivado
-RUN adduser --disabled-password --gecos '' vivado && \
-   usermod -aG sudo vivado && \
-   echo "vivado ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
 # create directory /opt/pkg
 RUN mkdir -p /opt/pkg && \
-   chown vivado /opt/pkg
+   chown ubuntu /opt/pkg
 
-# create vivado account
-USER vivado
-ENV HOME /home/vivado
+USER ubuntu 
+ENV HOME /home/ubuntu
 ENV LANG en_US.UTF-8
-WORKDIR /home/vivado
+WORKDIR /home/ubuntu
 
 # install petalinux
-COPY --chown=vivado:vivado ${PETALINUX_INSTALLER} /home/vivado/${PETALINUX_INSTALLER}
-RUN chmod +x /home/vivado/${PETALINUX_INSTALLER}
-RUN /home/vivado/${PETALINUX_INSTALLER} -y -d /opt/pkg/petalinux
-RUN echo "export TERM=linux" >> /home/vivado/.bashrc
-RUN echo "source /opt/pkg/petalinux/settings.sh" >> /home/vivado/.bashrc
+COPY --chown=ubuntu:ubuntu ${PETALINUX_INSTALLER} /home/ubuntu/${PETALINUX_INSTALLER}
+RUN chmod +x /home/ubuntu/${PETALINUX_INSTALLER}
+RUN /home/ubuntu/${PETALINUX_INSTALLER} -y -d /opt/pkg/petalinux
+RUN echo "export TERM=linux" >> /home/ubuntu/.bashrc
+RUN echo "source /opt/pkg/petalinux/settings.sh" >> /home/ubuntu/.bashrc
 # fix screen startup issue
-RUN echo "ulimit -n 1024" >> /home/vivado/.bashrc
+RUN echo "ulimit -n 1024" >> /home/ubuntu/.bashrc
 RUN rm -f ${PETALINUX_INSTALLER}
