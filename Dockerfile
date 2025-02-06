@@ -25,7 +25,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends apt-utils
 
 RUN apt-get -y install build-essential sudo expect emacs openssh-server gcc gawk diffstat xvfb chrpath socat xterm autoconf libtool libtool-bin python3 git net-tools zlib1g-dev libncurses5-dev libssl-dev xz-utils locales \
-wget tftp-hpa cpio gcc-multilib tofrodos iproute2 gnupg flex bison unzip make texinfo libsdl1.2-dev libglib2.0-dev zlib1g screen lsb-release vim libgtk2.0-dev libselinux1 tar rsync bc dialog
+wget tftp-hpa cpio gcc-multilib tofrodos iproute2 gnupg flex bison unzip make texinfo libsdl1.2-dev libglib2.0-dev zlib1g screen lsb-release vim libgtk2.0-dev libselinux1 tar rsync bc dialog bind9-dnsutils
 
 # locale update
 RUN locale-gen en_US.UTF-8 && \
@@ -38,6 +38,9 @@ RUN rm /bin/sh && \
 # create directory /opt/pkg
 RUN mkdir -p /opt/pkg && \
    chown ubuntu /opt/pkg
+
+RUN usermod -aG sudo ubuntu && \
+   echo "ubuntu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER ubuntu 
 ENV HOME /home/ubuntu
