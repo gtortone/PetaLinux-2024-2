@@ -42,6 +42,11 @@ RUN mkdir -p /opt/pkg && \
 RUN usermod -aG sudo ubuntu && \
    echo "ubuntu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# install libtinfo5
+RUN wget http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb && \
+   dpkg -i libtinfo5_6.3-2ubuntu0.1_amd64.deb && \
+   rm libtinfo5_6.3-2ubuntu0.1_amd64.deb
+
 USER ubuntu 
 ENV HOME /home/ubuntu
 ENV LANG en_US.UTF-8
