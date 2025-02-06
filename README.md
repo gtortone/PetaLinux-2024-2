@@ -25,7 +25,7 @@ $ docker build --build-arg PETALINUX_INSTALLER=petalinux-v2024.2-final-installer
 
 ## Run docker container
 ```
-$ docker run -it --name pl-2024.2 -v $HOME:/home/vivado/workshop --mount type=bind,source=/run/media,target=/run/media,bind-propagation=shared petalinux2024_2
+$ docker run -it --name pl-2024.2 -v $HOME:/home/ubuntu/workshop --mount type=bind,source=/run/media,target=/run/media,bind-propagation=shared petalinux2024_2
 ```
 
 ## how to know what commands are currently running on docker
